@@ -43,6 +43,7 @@ html, body {
   font-family: var(--font-kr);
   background: #EEEAE0;
   color: var(--dinga-ink);
+  overflow-x: hidden;
 }
 
 /* page chrome */
@@ -508,18 +509,19 @@ html, body {
 
 /* demo stage */
 .demo-stage {
-  min-height: calc(100vh - 64px);
+  height: calc(100dvh - 64px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px 24px;
-  gap: 14px;
+  padding: 12px 24px;
+  gap: 12px;
   position: relative;
+  overflow: hidden;
 }
 .demo-stage.presenting {
   background: #1A2B23;
-  min-height: 100vh;
+  height: 100dvh;
   padding-top: 32px;
 }
 
@@ -669,22 +671,24 @@ html, body {
   color: var(--dinga-ink);
 }
 
-/* phone stage in demo */
+/* phone stage in demo — fluid scale so the phone + control bar always fit the viewport */
 .phone-stage {
-  --phone-scale: 0.78;
+  /* chrome budget: topbar (60) + flow-indicator (22) + 2 gaps (24) + stage padding (24) + control bar (54) + breathing room (20) ≈ 204px */
+  --phone-h: clamp(360px, calc(100dvh - 220px), 844px);
+  --phone-scale: calc(var(--phone-h) / 844px);
   width: calc(390px * var(--phone-scale));
-  height: calc(844px * var(--phone-scale));
+  height: var(--phone-h);
   position: relative;
+  flex-shrink: 0;
 }
 .phone-stage .phone {
   transform: scale(var(--phone-scale));
   transform-origin: top left;
   transition: transform 0.2s ease;
 }
-@media (max-height: 760px) { .phone-stage { --phone-scale: 0.68; } }
-@media (max-height: 680px) { .phone-stage { --phone-scale: 0.6; } }
-@media (min-height: 980px) { .phone-stage { --phone-scale: 0.88; } }
-@media (min-height: 1080px) { .phone-stage { --phone-scale: 1; } }
+.demo-stage.presenting .phone-stage {
+  --phone-h: clamp(420px, calc(100dvh - 80px), 844px);
+}
 
 /* present mode chrome */
 .present-exit {

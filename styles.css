@@ -46,6 +46,26 @@ html, body {
   overflow-x: hidden;
 }
 
+/* shell: lock viewport to exactly 100dvh in demo mode so nothing can scroll;
+   overview mode keeps the natural document flow so the grid can scroll */
+.shell-demo,
+.shell-presenting {
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.shell-demo > .topbar {
+  position: static;
+  flex: 0 0 auto;
+}
+.shell-demo > .demo-stage,
+.shell-presenting > .demo-stage {
+  flex: 1 1 0;
+  min-height: 0;
+  height: auto;
+}
+
 /* page chrome */
 .page {
   max-width: 1480px;
@@ -509,19 +529,17 @@ html, body {
 
 /* demo stage */
 .demo-stage {
-  height: calc(100dvh - 64px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 12px 24px;
-  gap: 12px;
+  padding: 10px 16px;
+  gap: 10px;
   position: relative;
   overflow: hidden;
 }
 .demo-stage.presenting {
   background: #1A2B23;
-  height: 100dvh;
   padding-top: 32px;
 }
 
@@ -557,33 +575,33 @@ html, body {
 }
 .flow-indicator .dot.passed { background: var(--dinga-green); opacity: 0.6; }
 
-/* control bar */
+/* control bar — compact, hugs its content instead of stretching */
 .control-bar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 6px;
   background: #fff;
   border: 1px solid rgba(45,74,62,0.12);
   border-radius: 999px;
-  padding: 8px 8px 8px 18px;
+  padding: 5px 6px 5px 10px;
   box-shadow: 0 8px 24px -8px rgba(31, 51, 41, 0.18);
-  min-width: 560px;
 }
 .control-bar .title {
-  flex: 1;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--dinga-sub);
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
+  padding: 0 4px;
+  white-space: nowrap;
 }
 .control-bar .title b {
   color: var(--dinga-ink);
   font-weight: 600;
 }
 .control-bar .icon-btn {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   background: var(--dinga-cream);
   color: var(--dinga-green);
@@ -593,6 +611,7 @@ html, body {
   cursor: pointer;
   border: none;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 .control-bar .icon-btn:hover { background: var(--dinga-green); color: var(--dinga-cream); }
 .control-bar .icon-btn:active { transform: scale(0.92); }
@@ -606,13 +625,14 @@ html, body {
   color: var(--dinga-cream);
   border: none;
   border-radius: 999px;
-  padding: 9px 14px;
-  font-size: 12px;
+  padding: 7px 10px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  white-space: nowrap;
 }
 .flow-jump-menu {
   position: absolute;
@@ -671,10 +691,10 @@ html, body {
   color: var(--dinga-ink);
 }
 
-/* phone stage in demo — fluid scale so the phone + control bar always fit the viewport */
+/* phone stage in demo — fluid scale so the phone + control bar always fit the viewport.
+   chrome budget under the phone: control bar (~46) + indicator (~22) + 2 gaps (20) + stage padding (20) + topbar (~64) + buffer (10) ≈ 182px */
 .phone-stage {
-  /* chrome budget: topbar (60) + flow-indicator (22) + 2 gaps (24) + stage padding (24) + control bar (54) + breathing room (20) ≈ 204px */
-  --phone-h: clamp(360px, calc(100dvh - 220px), 844px);
+  --phone-h: clamp(340px, calc(100dvh - 200px), 844px);
   --phone-scale: calc(var(--phone-h) / 844px);
   width: calc(390px * var(--phone-scale));
   height: var(--phone-h);
@@ -687,7 +707,7 @@ html, body {
   transition: transform 0.2s ease;
 }
 .demo-stage.presenting .phone-stage {
-  --phone-h: clamp(420px, calc(100dvh - 80px), 844px);
+  --phone-h: clamp(420px, calc(100dvh - 70px), 844px);
 }
 
 /* present mode chrome */

@@ -153,9 +153,9 @@ const ControlBar = () => {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"><path d="M9 6l6 6-6 6"/></svg>
       </button>
       <div className="flow-jump" ref={jumpRef}>
-        <button className="flow-jump-btn" onClick={() => setJumpOpen(o => !o)}>
-          플로우 점프
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        <button className="flow-jump-btn" onClick={() => setJumpOpen(o => !o)} title="플로우 점프">
+          점프
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         {jumpOpen && (
           <div className="flow-jump-menu">
@@ -382,8 +382,13 @@ const KeyboardLayer = () => {
 // ---------- Shell ----------
 const Shell = () => {
   const { mode, presenting } = useDinga();
+  const shellCls = presenting
+    ? "shell shell-presenting"
+    : mode === "demo"
+      ? "shell shell-demo"
+      : "shell shell-overview";
   return (
-    <div>
+    <div className={shellCls}>
       {!presenting && <TopBar />}
       {mode === "demo" ? <DemoMode /> : <OverviewMode />}
       <ToastLayer />

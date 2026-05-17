@@ -692,12 +692,18 @@ html, body {
 }
 
 /* phone stage in demo — fluid scale so the phone + control bar always fit the viewport.
-   chrome budget under the phone: control bar (~46) + indicator (~22) + 2 gaps (20) + stage padding (20) + topbar (~64) + buffer (10) ≈ 182px */
+   chrome budget under the phone: control bar (~46) + indicator (~22) + 2 gaps (20) + stage padding (20) + topbar (~64) + buffer (10) ≈ 182px.
+   On narrow viewports the width budget takes over so the phone scales down to fit. */
 .phone-stage {
-  --phone-h: clamp(340px, calc(100dvh - 200px), 844px);
-  --phone-scale: calc(var(--phone-h) / 844px);
+  --phone-h-budget: clamp(340px, calc(100dvh - 200px), 844px);
+  --phone-w-budget: clamp(280px, calc(100vw - 32px), 414px);
+  /* 414 = phone width 390 + 12px device shadow on each side */
+  --phone-scale: min(
+    calc(var(--phone-h-budget) / 844px),
+    calc(var(--phone-w-budget) / 414px)
+  );
   width: calc(390px * var(--phone-scale));
-  height: var(--phone-h);
+  height: calc(844px * var(--phone-scale));
   position: relative;
   flex-shrink: 0;
 }
@@ -707,7 +713,8 @@ html, body {
   transition: transform 0.2s ease;
 }
 .demo-stage.presenting .phone-stage {
-  --phone-h: clamp(420px, calc(100dvh - 70px), 844px);
+  --phone-h-budget: clamp(420px, calc(100dvh - 70px), 844px);
+  --phone-w-budget: clamp(280px, calc(100vw - 24px), 414px);
 }
 
 /* present mode chrome */
@@ -873,4 +880,39 @@ button { font-family: inherit; }
 
 /* hide scrollbars on overview */
 .overview-stage { padding-top: 24px; }
+
+/* =====================================================
+   Mobile (≤640px) — compact chrome so the phone fills the screen
+   ===================================================== */
+@media (max-width: 640px) {
+  .topbar-inner {
+    padding: 8px 14px;
+    gap: 12px;
+  }
+  .topbar .brand-row { gap: 8px; }
+  .topbar .brand-row .wordmark { font-size: 24px; }
+  .topbar .brand-row .tag { display: none; }
+  .kbd-hint { display: none; }
+  .mode-switch { padding: 2px; }
+  .mode-switch .opt { padding: 5px 10px; font-size: 11px; gap: 4px; }
+
+  .demo-stage { padding: 6px 8px; gap: 8px; }
+
+  .flow-indicator { font-size: 11px; gap: 8px; }
+  .flow-indicator .dot { width: 5px; height: 5px; }
+  .flow-indicator .dot.active { width: 18px; }
+
+  .control-bar {
+    padding: 4px 4px 4px 8px;
+    gap: 4px;
+    max-width: calc(100vw - 16px);
+  }
+  .control-bar .title { font-size: 11px; gap: 4px; padding: 0 2px; }
+  .control-bar .icon-btn { width: 28px; height: 28px; }
+  .flow-jump-btn { padding: 6px 8px; font-size: 10px; }
+  .flow-jump-menu { min-width: 160px; font-size: 12px; right: -40px; }
+
+  .overview-stage { padding-top: 12px; }
+  .screen-grid { grid-template-columns: 1fr; gap: 28px 0; }
+}
 

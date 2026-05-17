@@ -1,0 +1,341 @@
+/* ============================================================
+ * Untitled UI Design System — colors_and_type.css
+ *
+ * Single source of truth for foundational tokens:
+ *   • Palette (base + Tailwind v4 scales)
+ *   • Semantic colors (text/bg/border/brand/state)
+ *   • Typography scale (Display 2xl → Text xs)
+ *   • Radius, spacing, shadows, blurs
+ *
+ * Brand typeface: Pretendard (provided by the user).
+ * Original Untitled UI typeface: Inter (kept as fallback).
+ * ============================================================ */
+
+/* ---------- 1. Pretendard webfont ---------- */
+/* User-provided OTFs in fonts/. The 9 axes map to weight 100–900. */
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-Thin.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-ExtraLight.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-Regular.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-Medium.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-SemiBold.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-Bold.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-ExtraBold.otf") format("opentype");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/Pretendard-Black.otf") format("opentype");
+}
+
+/* ---------- 2. Tokens ---------- */
+:root {
+  /* === Font families ===
+   * Untitled UI ships with Inter. The user uploaded Pretendard, which is set
+   * as the primary brand font here — its metrics are very close to Inter,
+   * so all of the existing Untitled UI scale values remain visually correct.
+   */
+  --font-sans: "Pretendard", "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Pretendard", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+
+  /* === Base palette ===
+   * Tailwind CSS v4 scales — Untitled UI v2 adopts Tailwind colors verbatim.
+   */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Gray (neutrals) — used for text, borders, surfaces */
+  --gray-25:  #fcfcfd;
+  --gray-50:  #f9fafb;
+  --gray-100: #f2f4f7;
+  --gray-200: #eaecf0;
+  --gray-300: #d0d5dd;
+  --gray-400: #98a2b3;
+  --gray-500: #667085;
+  --gray-600: #475467;
+  --gray-700: #344054;
+  --gray-800: #1d2939;
+  --gray-900: #101828;
+  --gray-950: #0c111d;
+
+  /* Brand — Untitled UI v2 ships with Tailwind blue */
+  --brand-25:  #f5fbff;
+  --brand-50:  #eff8ff;
+  --brand-100: #d1e9ff;
+  --brand-200: #b2ddff;
+  --brand-300: #84caff;
+  --brand-400: #53b1fd;
+  --brand-500: #2e90fa;
+  --brand-600: #1570ef;
+  --brand-700: #175cd3;
+  --brand-800: #1849a9;
+  --brand-900: #194185;
+  --brand-950: #102a56;
+
+  /* Legacy Untitled UI violet — still used for logomark gradient and
+   * design-annotation accents (dashed frame borders in the Figma file). */
+  --violet-50:  #f9f5ff;
+  --violet-100: #f4ebff;
+  --violet-200: #e9d7fe;
+  --violet-300: #d6bbfb;
+  --violet-400: #b692f6;
+  --violet-500: #9e77ed;
+  --violet-600: #7f56d9;
+  --violet-700: #6941c6;
+  --violet-800: #53389e;
+  --violet-900: #42307d;
+
+  /* States */
+  --success-25:  #f6fef9;
+  --success-50:  #ecfdf3;
+  --success-100: #d1fadf;
+  --success-300: #6ce9a6;
+  --success-500: #12b76a;
+  --success-600: #039855;
+  --success-700: #027a48;
+
+  --warning-25:  #fffcf5;
+  --warning-50:  #fffaeb;
+  --warning-100: #fef0c7;
+  --warning-300: #fec84b;
+  --warning-500: #f79009;
+  --warning-600: #dc6803;
+  --warning-700: #b54708;
+
+  --error-25:  #fffbfa;
+  --error-50:  #fef3f2;
+  --error-100: #fee4e2;
+  --error-300: #fda29b;
+  --error-500: #f04438;
+  --error-600: #d92d20;
+  --error-700: #b42318;
+
+  /* === Semantic aliases ===
+   * Use these in product code — never reach for a numbered swatch directly
+   * when a semantic name applies. Re-themeing means rebinding these.
+   */
+  --fg-primary:    var(--gray-900);
+  --fg-secondary:  var(--gray-700);
+  --fg-tertiary:   var(--gray-600);
+  --fg-quaternary: var(--gray-500);
+  --fg-disabled:   var(--gray-400);
+  --fg-placeholder:var(--gray-500);
+  --fg-on-brand:   var(--color-white);
+  --fg-brand:      var(--brand-700);
+  --fg-error:      var(--error-600);
+  --fg-success:    var(--success-700);
+  --fg-warning:    var(--warning-700);
+
+  --bg-primary:    var(--color-white);
+  --bg-secondary:  var(--gray-50);
+  --bg-tertiary:   var(--gray-100);
+  --bg-quaternary: var(--gray-200);
+  --bg-active:     var(--gray-50);
+  --bg-disabled:   var(--gray-100);
+  --bg-brand:      var(--brand-600);
+  --bg-brand-hover:var(--brand-700);
+  --bg-brand-subtle: var(--brand-50);
+  --bg-error:      var(--error-600);
+  --bg-error-subtle: var(--error-50);
+  --bg-success:    var(--success-600);
+  --bg-success-subtle: var(--success-50);
+  --bg-warning:    var(--warning-600);
+  --bg-warning-subtle: var(--warning-50);
+
+  --border-primary:   var(--gray-300);
+  --border-secondary: var(--gray-200);
+  --border-tertiary:  var(--gray-100);
+  --border-disabled:  var(--gray-300);
+  --border-brand:     var(--brand-600);
+  --border-error:     var(--error-300);
+
+  /* === Spacing scale (Tailwind 4px base) === */
+  --space-0:   0px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-2-5: 10px;
+  --space-3:   12px;
+  --space-3-5: 14px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+  --space-40:  160px;
+
+  /* === Radii === */
+  --radius-none: 0px;
+  --radius-xxs: 2px;
+  --radius-xs:  4px;
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg:  10px;
+  --radius-xl:  12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+  --radius-full: 9999px;
+
+  /* === Shadows ===
+   * Direct port of Untitled UI's shadow scale (from the Shadows page).
+   */
+  --shadow-xs:  0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  --shadow-sm:  0 1px 2px 0 rgba(16, 24, 40, 0.06),
+                0 1px 3px 0 rgba(16, 24, 40, 0.10);
+  --shadow-md:  0 2px 4px -2px rgba(16, 24, 40, 0.06),
+                0 4px 8px -2px rgba(16, 24, 40, 0.10);
+  --shadow-lg:  0 4px 6px -2px rgba(16, 24, 40, 0.03),
+                0 12px 16px -4px rgba(16, 24, 40, 0.08);
+  --shadow-xl:  0 8px 8px -4px rgba(16, 24, 40, 0.03),
+                0 20px 24px -4px rgba(16, 24, 40, 0.08);
+  --shadow-2xl: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
+  --shadow-3xl: 0 32px 64px -12px rgba(16, 24, 40, 0.14);
+  /* Focus rings */
+  --ring-brand: 0 0 0 4px rgba(46, 144, 250, 0.24);
+  --ring-error: 0 0 0 4px rgba(240, 68, 56, 0.24);
+  --ring-gray:  0 0 0 4px rgba(152, 162, 179, 0.14);
+
+  /* === Type scale (Untitled UI v2 — 11 tiers) === */
+  /* Display: tight leading + negative tracking */
+  --type-display-2xl-size:  72px;
+  --type-display-2xl-line:  90px;
+  --type-display-2xl-track: -0.02em;
+
+  --type-display-xl-size:   60px;
+  --type-display-xl-line:   72px;
+  --type-display-xl-track:  -0.02em;
+
+  --type-display-lg-size:   48px;
+  --type-display-lg-line:   60px;
+  --type-display-lg-track:  -0.02em;
+
+  --type-display-md-size:   36px;
+  --type-display-md-line:   44px;
+  --type-display-md-track:  -0.02em;
+
+  --type-display-sm-size:   30px;
+  --type-display-sm-line:   38px;
+  --type-display-sm-track:  0;
+
+  --type-display-xs-size:   24px;
+  --type-display-xs-line:   32px;
+  --type-display-xs-track:  0;
+
+  /* Text: relaxed leading, no tracking */
+  --type-text-xl-size: 20px;
+  --type-text-xl-line: 30px;
+  --type-text-lg-size: 18px;
+  --type-text-lg-line: 28px;
+  --type-text-md-size: 16px;
+  --type-text-md-line: 24px;
+  --type-text-sm-size: 14px;
+  --type-text-sm-line: 20px;
+  --type-text-xs-size: 12px;
+  --type-text-xs-line: 18px;
+}
+
+/* ---------- 3. Semantic type classes ---------- */
+/* Apply these directly to headings/paragraphs as a shortcut.
+ * Weights are baked in (Regular, Medium, Semibold). For other weights,
+ * combine .text-md with font-weight:700, etc. */
+
+.font-display { font-family: var(--font-display); }
+.font-sans    { font-family: var(--font-sans); }
+.font-mono    { font-family: var(--font-mono); }
+
+.display-2xl { font: 600 var(--type-display-2xl-size)/var(--type-display-2xl-line) var(--font-display); letter-spacing: var(--type-display-2xl-track); color: var(--fg-primary); }
+.display-xl  { font: 600 var(--type-display-xl-size)/var(--type-display-xl-line)  var(--font-display); letter-spacing: var(--type-display-xl-track);  color: var(--fg-primary); }
+.display-lg  { font: 600 var(--type-display-lg-size)/var(--type-display-lg-line)  var(--font-display); letter-spacing: var(--type-display-lg-track);  color: var(--fg-primary); }
+.display-md  { font: 600 var(--type-display-md-size)/var(--type-display-md-line)  var(--font-display); letter-spacing: var(--type-display-md-track);  color: var(--fg-primary); }
+.display-sm  { font: 600 var(--type-display-sm-size)/var(--type-display-sm-line)  var(--font-display); color: var(--fg-primary); }
+.display-xs  { font: 600 var(--type-display-xs-size)/var(--type-display-xs-line)  var(--font-display); color: var(--fg-primary); }
+
+.text-xl     { font: 400 var(--type-text-xl-size)/var(--type-text-xl-line) var(--font-sans); color: var(--fg-secondary); }
+.text-lg     { font: 400 var(--type-text-lg-size)/var(--type-text-lg-line) var(--font-sans); color: var(--fg-secondary); }
+.text-md     { font: 400 var(--type-text-md-size)/var(--type-text-md-line) var(--font-sans); color: var(--fg-secondary); }
+.text-sm     { font: 400 var(--type-text-sm-size)/var(--type-text-sm-line) var(--font-sans); color: var(--fg-secondary); }
+.text-xs     { font: 400 var(--type-text-xs-size)/var(--type-text-xs-line) var(--font-sans); color: var(--fg-tertiary); }
+
+/* Convenience weight modifiers */
+.weight-regular  { font-weight: 400; }
+.weight-medium   { font-weight: 500; }
+.weight-semibold { font-weight: 600; }
+.weight-bold     { font-weight: 700; }
+
+/* Common element defaults — opt-in via wrapper.untitled-ui */
+.untitled-ui {
+  font-family: var(--font-sans);
+  color: var(--fg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+.untitled-ui h1 { font: 600 var(--type-display-md-size)/var(--type-display-md-line) var(--font-display); letter-spacing: var(--type-display-md-track); color: var(--fg-primary); margin: 0; }
+.untitled-ui h2 { font: 600 var(--type-display-sm-size)/var(--type-display-sm-line) var(--font-display); color: var(--fg-primary); margin: 0; }
+.untitled-ui h3 { font: 600 var(--type-display-xs-size)/var(--type-display-xs-line) var(--font-display); color: var(--fg-primary); margin: 0; }
+.untitled-ui h4 { font: 600 var(--type-text-xl-size)/var(--type-text-xl-line)   var(--font-sans); color: var(--fg-primary); margin: 0; }
+.untitled-ui h5 { font: 600 var(--type-text-lg-size)/var(--type-text-lg-line)   var(--font-sans); color: var(--fg-primary); margin: 0; }
+.untitled-ui h6 { font: 600 var(--type-text-md-size)/var(--type-text-md-line)   var(--font-sans); color: var(--fg-primary); margin: 0; }
+.untitled-ui p  { font: 400 var(--type-text-md-size)/var(--type-text-md-line)   var(--font-sans); color: var(--fg-secondary); margin: 0; }
+.untitled-ui small { font: 400 var(--type-text-sm-size)/var(--type-text-sm-line) var(--font-sans); color: var(--fg-tertiary); }
+.untitled-ui code  { font-family: var(--font-mono); font-size: 0.9em; padding: 2px 6px; border-radius: var(--radius-xs); background: var(--gray-100); color: var(--gray-800); }

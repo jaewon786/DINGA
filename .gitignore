@@ -1,0 +1,12 @@
+node_modules/
+.vercel/
+.claude/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+!.env.example
+
+# Handoff bundle (kept locally as reference, do not ship)
+design-package/

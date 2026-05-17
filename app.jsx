@@ -190,10 +190,58 @@ const ControlBar = () => {
 // ---------- Demo mode ----------
 const DemoMode = () => {
   const { presenting } = useDinga();
+  const stageRef = React.useRef(null);
+
+  // JS-driven scaling: measure the demo-stage and set --phone-scale so the
+  // phone fits within whatever space is actually available (more robust
+  // than CSS calc with dvh + min(), which silently fails on some mobile
+  // browsers and leaves the phone at native 390×844 → cropped top/bottom).
+  React.useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const parent = el.parentElement;
+    if (!parent) return;
+
+    const compute = () => {
+      const cs = getComputedStyle(parent);
+      const padTop    = parseFloat(cs.paddingTop)    || 0;
+      const padBottom = parseFloat(cs.paddingBottom) || 0;
+      const padLeft   = parseFloat(cs.paddingLeft)   || 0;
+      const padRight  = parseFloat(cs.paddingRight)  || 0;
+      const gap       = parseFloat(cs.rowGap || cs.gap || "0") || 0;
+
+      const siblings = Array.from(parent.children).filter(c => c !== el);
+      const siblingsH = siblings.reduce((s, c) => s + c.offsetHeight, 0);
+      const totalGap = Math.max(0, parent.children.length - 1) * gap;
+
+      const availH = parent.clientHeight - padTop - padBottom - siblingsH - totalGap;
+      const availW = parent.clientWidth  - padLeft - padRight;
+
+      // 414 = phone (390) + 12px box-shadow bezel on each side
+      const scale = Math.max(
+        0.35,
+        Math.min(1, availH / 844, availW / 414)
+      );
+
+      el.style.setProperty("--phone-scale", String(scale));
+      el.style.width  = (390 * scale) + "px";
+      el.style.height = (844 * scale) + "px";
+    };
+
+    compute();
+    const ro = new ResizeObserver(compute);
+    ro.observe(parent);
+    window.addEventListener("resize", compute);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", compute);
+    };
+  }, [presenting]);
+
   return (
     <div className={`demo-stage ${presenting ? "presenting" : ""}`}>
       {!presenting && <FlowIndicator />}
-      <div className="phone-stage">
+      <div className="phone-stage" ref={stageRef}>
         <PhoneFrame>
           <ScreenRenderer />
         </PhoneFrame>

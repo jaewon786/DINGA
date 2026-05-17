@@ -691,17 +691,10 @@ html, body {
   color: var(--dinga-ink);
 }
 
-/* phone stage in demo — fluid scale so the phone + control bar always fit the viewport.
-   chrome budget under the phone: control bar (~46) + indicator (~22) + 2 gaps (20) + stage padding (20) + topbar (~64) + buffer (10) ≈ 182px.
-   On narrow viewports the width budget takes over so the phone scales down to fit. */
+/* phone stage in demo — JS sets --phone-scale + explicit width/height to fit
+   the actual demo-stage size. CSS here is just a safe pre-JS default. */
 .phone-stage {
-  --phone-h-budget: clamp(340px, calc(100dvh - 200px), 844px);
-  --phone-w-budget: clamp(280px, calc(100vw - 32px), 414px);
-  /* 414 = phone width 390 + 12px device shadow on each side */
-  --phone-scale: min(
-    calc(var(--phone-h-budget) / 844px),
-    calc(var(--phone-w-budget) / 414px)
-  );
+  --phone-scale: 0.65;
   width: calc(390px * var(--phone-scale));
   height: calc(844px * var(--phone-scale));
   position: relative;
@@ -711,10 +704,6 @@ html, body {
   transform: scale(var(--phone-scale));
   transform-origin: top left;
   transition: transform 0.2s ease;
-}
-.demo-stage.presenting .phone-stage {
-  --phone-h-budget: clamp(420px, calc(100dvh - 70px), 844px);
-  --phone-w-budget: clamp(280px, calc(100vw - 24px), 414px);
 }
 
 /* present mode chrome */
